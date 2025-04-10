@@ -2,8 +2,9 @@
 
 namespace Surender\ProdegeApi\Services;
 
-use Surender\ProdegeApi\Contracts\ProdegeApiInterface;
 use GuzzleHttp\Client;
+use Surender\ProdegeApi\Contracts\ProdegeApiInterface;
+use Surender\ProdegeApi\Responses\ResponseHandler;
 
 class ProdegeService implements ProdegeApiInterface
 {
@@ -28,7 +29,7 @@ class ProdegeService implements ProdegeApiInterface
         return $data;
     }
 
-    public function generateSignedUrl(string $endpoint, array $params): string
+    private function generateSignedUrl(string $endpoint, array $params): string
     {
         $signed = $this->generateSignedParams($params);
         return rtrim($this->baseUrl, '/') . '/' . ltrim($endpoint, '/') . '?' . http_build_query($signed);
@@ -38,7 +39,7 @@ class ProdegeService implements ProdegeApiInterface
     {
         $url = $this->generateSignedUrl($endpoint, $params);
         $response = $this->http->get($url);
-        return json_decode($response->getBody()->getContents(), true);
+        return new ResponseHandler(json_decode($response->getBody()->getContents(), true));
     }
 
     public function post(string $endpoint, array $params = [])
@@ -48,6 +49,6 @@ class ProdegeService implements ProdegeApiInterface
         $response = $this->http->post(rtrim($this->baseUrl, '/') . '/' . ltrim($endpoint, '/'), [
             'form_params' => $signed_payload
         ]);
-        return json_decode($response->getBody()->getContents(), true);
+        return new ResponseHandler(json_decode($response->getBody()->getContents(), true));
     }
 }
