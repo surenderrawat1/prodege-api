@@ -25,7 +25,13 @@ class ResponseHandler
 
     public function getMessage(): string
     {
-        return $this->returnStatus['message'][0] ?? 'Unknown message';
+        $message = $this->returnStatus['message'] ?? 'Unknown message';
+
+        if (is_array($message)) {
+            return implode(' | ', $message);
+        }
+
+        return (string) $message;
     }
 
     public function getErrorCodes(): array
