@@ -29,7 +29,7 @@ class ProdegeService implements ProdegeApiInterface
         return $data;
     }
 
-    private function generateSignedUrl(string $endpoint, array $params): string
+    public function generateSignedUrl(string $endpoint, array $params): string
     {
         $signed = $this->generateSignedParams($params);
         return rtrim($this->baseUrl, '/') . '/' . ltrim($endpoint, '/') . '?' . http_build_query($signed);

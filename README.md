@@ -30,9 +30,11 @@ php artisan vendor:publish --tag=prodege-config
 
 ## Set up your .env:
 
-PRODEGE_API_KEY=your_api_key
-PRODEGE_SECRET=your_secret
-PRODEGE_BASE_URL=https://api.prodegemr.com
+```env
+ PRODEGE_API_KEY=your_api_key
+ PRODEGE_SECRET=your_secret
+ PRODEGE_BASE_URL=https://api.prodegemr.com
+```
 
 ## ✅ Usage
 
